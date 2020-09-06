@@ -2,13 +2,14 @@
     <v-app-bar id="cshub-toolbar" :color="toolbarColor" app fixed clipped-left>
         <v-app-bar-nav-icon @click.native="drawerComputed = !drawerComputed"></v-app-bar-nav-icon>
         <v-toolbar-title>
-            <router-link to="/" style="color: inherit">
+            <router-link to="/" style="color: inherit;">
                 <div v-if="darkMode" class="title ml-0" :class="{ 'mr-5': $vuetify.breakpoint.mdAndUp }">
                     <v-img style="width: 80px" src="/assets/logo.jpg"></v-img>
                 </div>
                 <div v-else class="title ml-0" :class="{ 'mr-5': $vuetify.breakpoint.mdAndUp }">
                     CS&nbsp;<span class="font-weight-light">Hub</span>
                 </div>
+                <span class="title-label">99.9999999% Uptime</span>
             </router-link>
         </v-toolbar-title>
 
@@ -183,5 +184,21 @@ export default class Toolbar extends Vue {
     #cshub-toolbar {
         display: none;
     }
+}
+
+.title-label {
+    position: absolute;
+    z-index: 100;
+    margin-top: -2px;
+    margin-left: -14px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #000;
+    transform: rotateZ(-7deg);
 }
 </style>

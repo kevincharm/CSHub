@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosTransformer } from "axios";
 
 import { IApiRequest } from "../../../cshub-shared/src/models";
 import { dataState, userState, uiState } from "../store";
@@ -27,6 +27,13 @@ axiosApi.interceptors.request.use((config: AxiosRequestConfig) => {
 
 axiosApi.interceptors.response.use(
     (value: AxiosResponse<any>) => {
+        const transformResponse = axios.defaults.transformResponse;
+        if (Array.isArray(transformResponse)) {
+            value.data = transformResponse.reduce((data, transformer) => transformer(data), value.data);
+        } else if (transformResponse) {
+            value.data = transformResponse(value.data);
+        }
+
         return value;
     },
     (error: any) => {

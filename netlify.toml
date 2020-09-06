@@ -1,0 +1,9 @@
+[build]
+base = "cshub-client"
+command = "cd ../cshub-shared && yarn install && cd ../cshub-client && yarn install && VUE_APP_API_URL=https://api.cshub.nl yarn build"
+publish = "dist"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

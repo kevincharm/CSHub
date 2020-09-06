@@ -1,0 +1,59 @@
+---
+kind: pipeline
+type: docker
+name: scrape and update mirror
+
+trigger:
+  event:
+    include:
+      - cron
+    exclude:
+      - pull_request
+  cron:
+    - rebuild_nightly
+
+volumes:
+  - name: cache
+    host:
+      path: /drone-cache
+
+steps:
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - ./cshub-shared/node_modules
+        - ./scraper/node_modules
+  - name: install-deps
+    image: node:12
+    commands:
+      - sleep 5
+      - cd cshub-shared
+      - yarn install
+      - cd ..
+      - cd scraper
+      - yarn install
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./cshub-shared/node_modules
+        - ./scraper/node_modules
+  - name: build-app
+    image: node:12
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: AWS_SECRET_ACCESS_KEY
+    commands:
+      - cd scraper
+      - yarn start

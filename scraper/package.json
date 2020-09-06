@@ -1,0 +1,27 @@
+{
+  "name": "scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "mkdir -p dist && ts-node src/index.ts",
+    "dev:start": "mkdir -p dist && env-cmd -f .env.dev ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/axios": "^0.14.0",
+    "@types/node": "^14.6.4",
+    "@types/sha.js": "^2.4.0",
+    "env-cmd": "^10.1.0",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.747.0",
+    "axios": "^0.20.0",
+    "sha.js": "^2.4.11",
+    "ts-node": "^9.0.0"
+  }
+}

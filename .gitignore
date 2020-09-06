@@ -5,3 +5,6 @@ settings.env
 .env
 .htpasswd
 nginx.conf
+
+# OSX
+.DS_Store
